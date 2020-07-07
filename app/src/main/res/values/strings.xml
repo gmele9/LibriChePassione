@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">LibriChePassione</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="searchWithISBN">Ricerca con codice ISBN</string>
+    <string name="editTextISBN">ISBN</string>
+    <string name="buttonSearch">CERCA</string>
+    <string name="editTextTitle">Titolo</string>
+    <string name="editTextAuthor">Autore</string>
+    <string name="textViewSubject">genere:</string>
+    <string name="searchAuthorTitleSubject">Ricerca tramite Autore, Titolo o Genere</string>
+</resources>

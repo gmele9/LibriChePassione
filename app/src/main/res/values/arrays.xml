@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="subject" >
+        <item>  </item>
+        <item> Avventura </item>
+        <item> Giallo </item>
+        <item> Fantascienza </item>
+        <item> Fantasy </item>
+        <item> Rosa </item>
+        <item> Autobiografia </item>
+        <item> Filosofia </item>
+        <item> Storico </item>
+        <item> Saggio </item>
+
+    </string-array>
+</resources>
