@@ -1,18 +1,22 @@
 package it.unimib.librichepassione.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class BookInfo {
+public class BookInfo implements Parcelable {
     private String title;
     private String author;
     private String publisher;
     private String publishedDate;
     private List<ISBN> industryIdentifiers;
-    private List<String> categories;
+    private String categories;
     private String thumbnail;
 
     public BookInfo(String title, String author, String publisher,
-                    String publishedDate, List<ISBN> industryIdentifiers, List<String> categories, String thumbnail) {
+                    String publishedDate, List<ISBN> industryIdentifiers, String categories, String thumbnail) {
         this.title = title;
         this.author = author;
         this.publisher = publisher;
@@ -62,11 +66,11 @@ public class BookInfo {
         this.industryIdentifiers = industryIdentifiers;
     }
 
-    public List<String> getCategories() {
+    public String getCategories() {
         return categories;
     }
 
-    public void setCategories(List<String> categories) {
+    public void setCategories(String categories) {
         this.categories = categories;
     }
 
@@ -90,4 +94,53 @@ public class BookInfo {
                 ", thumbnail='" + thumbnail + '\'' +
                 '}';
     }
+
+    protected BookInfo(Parcel in) {
+        title = in.readString();
+        author = in.readString();
+        publisher = in.readString();
+        publishedDate = in.readString();
+        if (in.readByte() == 0x01) {
+            industryIdentifiers = new ArrayList<ISBN>();
+            in.readList(industryIdentifiers, ISBN.class.getClassLoader());
+        } else {
+            industryIdentifiers = null;
+        }
+        categories = in.readString();
+        thumbnail = in.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(author);
+        dest.writeString(publisher);
+        dest.writeString(publishedDate);
+        if (industryIdentifiers == null) {
+            dest.writeByte((byte) (0x00));
+        } else {
+            dest.writeByte((byte) (0x01));
+            dest.writeList(industryIdentifiers);
+        }
+        dest.writeString(categories);
+        dest.writeString(thumbnail);
+    }
+
+    @SuppressWarnings("unused")
+    public static final Parcelable.Creator<BookInfo> CREATOR = new Parcelable.Creator<BookInfo>() {
+        @Override
+        public BookInfo createFromParcel(Parcel in) {
+            return new BookInfo(in);
+        }
+
+        @Override
+        public BookInfo[] newArray(int size) {
+            return new BookInfo[size];
+        }
+    };
 }

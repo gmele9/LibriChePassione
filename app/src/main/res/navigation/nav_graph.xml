@@ -9,7 +9,12 @@
         android:id="@+id/searchFragment"
         android:name="it.unimib.librichepassione.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/showSearchBookDetailAction"
+            app:destination="@id/searchDetailFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/advancedSearchFragment"
         android:name="it.unimib.librichepassione.AdvancedSearchFragment"
@@ -20,4 +25,13 @@
         android:name="it.unimib.librichepassione.FavoriteFragment"
         android:label="fragment_favorite"
         tools:layout="@layout/fragment_favorite" />
+    <fragment
+        android:id="@+id/searchDetailFragment"
+        android:name="it.unimib.librichepassione.SearchDetailFragment"
+        android:label="fragment_search_detail"
+        tools:layout="@layout/fragment_search_detail" >
+        <argument
+            android:name="book"
+            app:argType="it.unimib.librichepassione.model.BookInfo" />
+    </fragment>
 </navigation>
