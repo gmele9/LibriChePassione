@@ -5,10 +5,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -30,16 +33,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
         TextView textViewBookTitle;
         TextView textViewBookAuthors;
+        ImageView imageViewBook;
 
         public SearchViewHolder(View view) {
             super(view);
             textViewBookTitle = view.findViewById(R.id.textViewSearchItemTitle);
             textViewBookAuthors = view.findViewById(R.id.textViewSearchItemAuthors);
+            imageViewBook = view.findViewById(R.id.imageViewSearchItem);
         }
 
         public void bind(BookInfo book, OnItemClickListener onItemClickListener){
             textViewBookTitle.setText(book.getTitle());
             textViewBookAuthors.setText(book.getAuthor());
+            Log.d(TAG, "url:" + book.getThumbnail());
+            String URL = book.getThumbnail().replace("http", "https");
+            Picasso.get().load(URL).into(imageViewBook);
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

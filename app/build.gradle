@@ -60,4 +60,6 @@ dependencies {
 
     apply plugin: "androidx.navigation.safeargs"
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

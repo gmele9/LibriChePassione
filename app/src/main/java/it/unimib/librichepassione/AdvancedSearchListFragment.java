@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -17,116 +16,112 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SearchView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
+import java.util.Observable;
 
 import it.unimib.librichepassione.adapters.SearchAdapter;
-import it.unimib.librichepassione.databinding.FragmentSearchBinding;
+import it.unimib.librichepassione.databinding.FragmentAdvancedSearchListBinding;
 import it.unimib.librichepassione.model.Book;
 import it.unimib.librichepassione.model.BookInfo;
 import it.unimib.librichepassione.model.ISBN;
 import it.unimib.librichepassione.viewModels.SearchViewModel;
 
-public class SearchFragment extends Fragment {
+public class AdvancedSearchListFragment extends Fragment {
 
-    private static final String TAG = "SearchFragment: ";
-    private FragmentSearchBinding binding;
+
     private SearchViewModel searchViewModel;
     private List<BookInfo> bookList;
     private SearchAdapter searchAdapter;
+    private RecyclerView recyclerView;
 
-    public SearchFragment() {
-        // Required empty public constructor
+    private static final String TAG = "AdvSearchListFrag: ";
+
+//    // TODO: Rename parameter arguments, choose names that match
+//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
+//
+//    // TODO: Rename and change types of parameters
+//    private String mParam1;
+//    private String mParam2;
+//
+//    public AdvancedSearchListFragment() {
+//        // Required empty public constructor
+//    }
+//
+//    /**
+//     * Use this factory method to create a new instance of
+//     * this fragment using the provided parameters.
+//     *
+//     * @param param1 Parameter 1.
+//     * @param param2 Parameter 2.
+//     * @return A new instance of fragment AdvancedSearchListFragment.
+//     */
+//    // TODO: Rename and change types and number of parameters
+//    public static AdvancedSearchListFragment newInstance(String param1, String param2) {
+//        AdvancedSearchListFragment fragment = new AdvancedSearchListFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//        }
+//    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_advanced_search_list, container, false);
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        binding = FragmentSearchBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        binding.recyclerViewSearch.setLayoutManager(layoutManager);
+        recyclerView = view.findViewById(R.id.recyclerViewAdvancedSearch);
+        recyclerView.setLayoutManager(layoutManager);
 
         bookList = new ArrayList<>();
-        searchAdapter = new SearchAdapter(bookList, getActivity(), new SearchAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BookInfo book) {
-                Log.d(TAG, "item premuto" + book.getTitle());
-                SearchFragmentDirections.ShowSearchBookDetailAction action = SearchFragmentDirections.showSearchBookDetailAction(book);
-                Navigation.findNavController(view).navigate(action);
-            }
-        });
-        binding.recyclerViewSearch.setAdapter(searchAdapter);
 
-        binding.searchViewId.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        super.onViewCreated(view, savedInstanceState);
+        String query = AdvancedSearchListFragmentArgs.fromBundle(getArguments()).getQuery();
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                if(newText.length() != 0){
-                    loadBooks(newText);
-                }
-
-                return false;
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-
-    private void loadBooks(String query){
         searchViewModel = new ViewModelProvider(this).get(SearchViewModel.class);
-
-//        binding = FragmentSearchBinding.inflate(getLayoutInflater());
-//        View view = binding.getRoot();
-//
-//        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        binding.recyclerViewSearch.setLayoutManager(layoutManager);
-
-        //List<BookInfo> bookList = new ArrayList<>();
 
         final Observer<List<Book>> observer = new Observer<List<Book>>() {
             @Override
             public void onChanged(List<Book> books) {
-                //Log.d(TAG, "msg: " + books.get(i));
                 takeInfoList(books);
                 Log.d(TAG, "msg: " + bookList);
-
-                searchAdapter.notifyDataSetChanged();
+                SearchAdapter searchAdapter = new SearchAdapter(bookList, getActivity(), new SearchAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(BookInfo book) {
+                        Log.d(TAG, "elemento premuto: " + book.getTitle());
+                        AdvancedSearchListFragmentDirections.ShowSearchAdvancedBookDetailAction action =
+                                AdvancedSearchListFragmentDirections.showSearchAdvancedBookDetailAction(book);
+                        Navigation.findNavController(view).navigate(action);
+                    }
+                });
+                recyclerView.setAdapter(searchAdapter);
             }
         };
 
         searchViewModel.getBooks(query).observe(getViewLifecycleOwner(), observer);
-
-
     }
 
-    private List<BookInfo> takeInfoList(List<Book> books) {
+    private void takeInfoList(List<Book> books) {
         bookList.clear();
         Book book;
         BookInfo b;
@@ -139,7 +134,7 @@ public class SearchFragment extends Fragment {
         }
 
         //Log.d(TAG, "book: " + bookList);
-        return bookList;
+
 
     }
 
@@ -289,5 +284,3 @@ public class SearchFragment extends Fragment {
         return book;
     }
 }
-
-
