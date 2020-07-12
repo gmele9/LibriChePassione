@@ -10,4 +10,10 @@
     <string name="editTextAuthor">Autore</string>
     <string name="textViewSubject">genere:</string>
     <string name="searchAuthorTitleSubject">Ricerca tramite Autore, Titolo o Genere</string>
+    <string name="titleDetail">Titolo:</string>
+    <string name="authorDetail">Autore/i:</string>
+    <string name="PublisherDetail">Editore:</string>
+    <string name="PublisherDateDetail">Data di pubblicazione:</string>
+    <string name="ISBNDetail">Identificatore/i:</string>
+    <string name="CategoriesDetail">Genere:</string>
 </resources>
