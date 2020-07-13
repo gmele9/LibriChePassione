@@ -1,15 +1,13 @@
 package it.unimib.librichepassione;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -31,9 +29,7 @@ import java.util.List;
 
 import it.unimib.librichepassione.model.BookInfo;
 
-
-public class SearchDetailFragment extends Fragment {
-
+public class FavoriteDetailFragment extends Fragment {
     private TextView textViewTitle;
     private TextView textViewAuthor;
     private TextView textViewPublisher;
@@ -41,37 +37,39 @@ public class SearchDetailFragment extends Fragment {
     private TextView textViewISBN;
     private TextView textViewCategories;
     private ImageView imageViewThumbnail;
-    private Button buttonAddPreferences;
+    private Button buttonRemovePreferences;
     private SharedPreferences sp;
-    private static final String TAG = "SearchDetailFragment";
+    private static final String TAG = "FavDetailFragment";
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search_detail, container, false);
+        return inflater.inflate(R.layout.fragment_favorite_detail, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        textViewTitle = view.findViewById(R.id.textViewSearchDetailTitle);
-        textViewAuthor = view.findViewById(R.id.textViewSearchDetailAuthor);
-        textViewPublisher = view.findViewById(R.id.textViewSearchDetailPublisher);
-        textViewPublisherDate = view.findViewById(R.id.textViewSearchDetailPublisherDate);
-        textViewISBN = view.findViewById(R.id.textViewSearchDetailISBN);
-        textViewCategories = view.findViewById(R.id.textViewSearchDetailCategories);
-        imageViewThumbnail = view.findViewById(R.id.imageViewSearchDetail);
+        textViewTitle = view.findViewById(R.id.textViewFavoriteDetailTitle);
+        textViewAuthor = view.findViewById(R.id.textViewFavoriteDetailAuthor);
+        textViewPublisher = view.findViewById(R.id.textViewFavoriteDetailPublisher);
+        textViewPublisherDate = view.findViewById(R.id.textViewFavoriteDetailPublisherDate);
+        textViewISBN = view.findViewById(R.id.textViewFavoriteDetailISBN);
+        textViewCategories = view.findViewById(R.id.textViewFavoriteDetailCategories);
+        imageViewThumbnail = view.findViewById(R.id.imageViewFavoriteDetail);
 
-        BookInfo book = SearchDetailFragmentArgs.fromBundle(getArguments()).getBook();
+        BookInfo book = FavoriteDetailFragmentArgs.fromBundle(getArguments()).getBook();
+        Log.d(TAG, "book: " + book);
 
         textViewTitle.setText(book.getTitle());
         textViewAuthor.setText(book.getAuthor());
         textViewPublisher.setText(book.getPublisher());
         textViewPublisherDate.setText(book.getPublishedDate());
         textViewCategories.setText(book.getCategories());
+
         String isbn = "";
         for (int i = 0; i < book.getIndustryIdentifiers().size(); i++) {
             if (i == book.getIndustryIdentifiers().size() - 1)
@@ -85,22 +83,23 @@ public class SearchDetailFragment extends Fragment {
         String url = book.getThumbnail().replace("http", "https");
         Picasso.get().load(url).into(imageViewThumbnail);
 
-        buttonAddPreferences = view.findViewById(R.id.buttonAddPreferences);
+        buttonRemovePreferences = view.findViewById(R.id.buttonRemovePreferences);
         //SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("MY_USER_PREF", Context.MODE_PRIVATE);
-        buttonAddPreferences.setOnClickListener(new View.OnClickListener() {
+        buttonRemovePreferences.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addFavorite(book);
+                removeFavorite(book);
+                Navigation.findNavController(view).navigate(FavoriteDetailFragmentDirections.showFavoriteFragmentAction());
 
-                Toast toast = Toast.makeText(getActivity(), book.getTitle() + " aggiunto dai preferiti", Toast.LENGTH_SHORT);
+                Toast toast = Toast.makeText(getActivity(), book.getTitle() + " rimosso dai preferiti", Toast.LENGTH_SHORT);
                 toast.setGravity(Gravity.CENTER, 0, 0);
                 toast.show();
             }
         });
     }
 
-    public void addFavorite(BookInfo bookInfo) {
-        Boolean trovato = false;
+    public void removeFavorite(BookInfo bookInfo) {
+        int trovato =  -1;
 
         String gStringInput;
 
@@ -117,44 +116,22 @@ public class SearchDetailFragment extends Fragment {
 
         Log.d(TAG, "booklist" + bookInfoList);
 
-        if (bookInfoList != null) {
-
-            for (int i = 0; i < bookInfoList.size(); i++) {
-                if (bookInfo.getIndustryIdentifiers().get(0).getIdentifier()
-                        .equals(bookInfoList.get(i).getIndustryIdentifiers().get(0).getIdentifier())) {
-                    trovato = true;
-                    break;
-                }
-            }
-
-            if (trovato) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Errore!");
-                builder.setMessage("'" + bookInfo.getTitle() + "' è già presente nei preferiti!");
-                builder.show();
-            } else {
-                bookInfoList.add(bookInfo);
-                gStringInput = gson.toJson(bookInfoList);
-
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-
-                editor.putString("list", gStringInput);
-
-                editor.commit();
+        for (int i = 0; i < bookInfoList.size(); i++) {
+            if (bookInfo.getIndustryIdentifiers().get(0).getIdentifier()
+                    .equals(bookInfoList.get(i).getIndustryIdentifiers().get(0).getIdentifier())) {
+                trovato = i;
+                break;
             }
         }
-        else {
-            Log.d(TAG,"dentro else");
-            List<BookInfo> infoList = new ArrayList<>();
-            infoList.add(bookInfo);
-            gStringInput = gson.toJson(infoList);
 
-            SharedPreferences.Editor editor = sharedPreferences.edit();
+        bookInfoList.remove(trovato);
+        gStringInput = gson.toJson(bookInfoList);
 
-            editor.putString("list", gStringInput);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            editor.commit();
-        }
+        editor.putString("list", gStringInput);
+
+        editor.commit();
+
     }
-
 }

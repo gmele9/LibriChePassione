@@ -119,58 +119,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewAdvancedSearch" />
 
-                <EditText
-                    android:id="@+id/editTextTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:ems="10"
-                    android:hint="@string/editTextTitle"
-                    android:inputType="textPersonName"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextAuthor" />
-
-                <TextView
-                    android:id="@+id/textViewSubject"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:text="@string/textViewSubject"
-                    app:layout_constraintEnd_toStartOf="@+id/spinnerSubject"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/editTextTitle" />
-
-                <Spinner
-                    android:id="@+id/spinnerSubject"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="8dp"
-                    android:entries="@array/subject"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/editTextTitle"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewSubject" />
-
                 <Button
                     android:id="@+id/buttonAdvancedSearch"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_marginBottom="16dp"
                     android:text="@string/buttonSearch"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinnerSubject" />
+                    app:layout_constraintTop_toBottomOf="@+id/editTextAuthor" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:context=".SearchDetailFragment">
+
+        <!-- TODO: Update blank fragment layout -->
+
+        <ImageView
+            android:id="@+id/imageViewFavoriteDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/titleDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/authorDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailPublisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/PublisherDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailPublisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailPublisherDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/PublisherDateDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailPublisherDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailISBN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/ISBNDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailISBN"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/FavoriteDetailCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="8dp"
+            android:text="@string/CategoriesDetail"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/textViewFavoriteDetailCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="6dp"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center">
+            <Button
+                android:id="@+id/buttonRemovePreferences"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rimuovi dai preferiti"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

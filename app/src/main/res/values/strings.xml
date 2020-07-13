@@ -9,7 +9,7 @@
     <string name="editTextTitle">Titolo</string>
     <string name="editTextAuthor">Autore</string>
     <string name="textViewSubject">genere:</string>
-    <string name="searchAuthorTitleSubject">Ricerca tramite Autore, Titolo o Genere</string>
+    <string name="searchAuthorTitleSubject">Ricerca tramite Autore</string>
     <string name="titleDetail">Titolo:</string>
     <string name="authorDetail">Autore/i:</string>
     <string name="PublisherDetail">Editore:</string>
