@@ -13,10 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,48 +39,9 @@ public class AdvancedSearchListFragment extends Fragment {
     private List<BookInfo> bookList;
     private SearchAdapter searchAdapter;
     private RecyclerView recyclerView;
+    private TextView textView;
 
     private static final String TAG = "AdvSearchListFrag: ";
-
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//
-//    public AdvancedSearchListFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment AdvancedSearchListFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static AdvancedSearchListFragment newInstance(String param1, String param2) {
-//        AdvancedSearchListFragment fragment = new AdvancedSearchListFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,6 +52,8 @@ public class AdvancedSearchListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+
+        textView = view.findViewById(R.id.textViewAdvancedSearchList);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.recyclerViewAdvancedSearch);
@@ -117,25 +83,28 @@ public class AdvancedSearchListFragment extends Fragment {
                 recyclerView.setAdapter(searchAdapter);
             }
         };
-
         searchViewModel.getBooks(query).observe(getViewLifecycleOwner(), observer);
     }
 
-    private void takeInfoList(List<Book> books) {
+    private Boolean takeInfoList(List<Book> books) {
         bookList.clear();
         Book book;
         BookInfo b;
-        for (int i = 0; i < books.size(); i++){
-            book = books.get(i);
-            String content = book.toString();
-            b = takeInfoBook(content);
-            bookList.add(b);
-            //Log.d(TAG, "book: " + b);
+        Log.d(TAG, "books " + books);
+        if(books != null) {
+            for (int i = 0; i < books.size(); i++) {
+                book = books.get(i);
+                String content = book.toString();
+                b = takeInfoBook(content);
+                bookList.add(b);
+                //Log.d(TAG, "book: " + b);
+            }
+            //Log.d(TAG, "book: " + bookList);
+            return true;
         }
-
-        //Log.d(TAG, "book: " + bookList);
-
-
+        textView.setText(R.string.NoResults);
+        textView.setGravity(Gravity.CENTER);
+        return false;
     }
 
     private BookInfo takeInfoBook(String str) {
@@ -146,7 +115,7 @@ public class AdvancedSearchListFragment extends Fragment {
         String subString = str.substring(indexTitle, indexEqual);
         int indexComma = subString.lastIndexOf(",");
         title = subString.substring(0, indexComma);
-        //Log.d(TAG, "titolo: " + title);
+        Log.d(TAG, "titolo: " + title);
 
         String authors;
         int indexSquare1;
@@ -156,11 +125,12 @@ public class AdvancedSearchListFragment extends Fragment {
             indexSquare1 = str.indexOf("[", indexAuthor) + 1;
             indexSquare2 = str.indexOf("]", indexAuthor);
             authors = str.substring(indexSquare1, indexSquare2);
-            //Log.d(TAG, "autori: " + authors);
+
         }
         else{
             authors = null;
         }
+        Log.d(TAG, "autori: " + authors);
 
         String publisher;
         int indexPublisher = str.indexOf("publisher=");
@@ -170,11 +140,12 @@ public class AdvancedSearchListFragment extends Fragment {
             subString = str.substring(indexPublisher, indexEqual);
             indexComma = subString.lastIndexOf(",");
             publisher = subString.substring(0, indexComma);
-            //Log.d(TAG, "editori: " + publisher);
+            //
         }
         else{
             publisher = null;
         }
+        Log.d(TAG, "editori: " + publisher);
 
         String publisherDate;
         int indexPublisherDate = str.indexOf("publishedDate=");
@@ -184,11 +155,12 @@ public class AdvancedSearchListFragment extends Fragment {
             subString = str.substring(indexPublisherDate, indexEqual);
             indexComma = subString.lastIndexOf(",");
             publisherDate = subString.substring(0, indexComma);
-            //Log.d(TAG, "data pubblicazione: " + publisherDate);
+            //
         }
         else{
             publisherDate = null;
         }
+        Log.d(TAG, "data pubblicazione: " + publisherDate);
 
         String type, type1;
         String identifier, identifier1;
@@ -248,8 +220,8 @@ public class AdvancedSearchListFragment extends Fragment {
         }
         ISBN isbn = new ISBN(type, identifier);
         ISBN isbn1 = new ISBN(type1, identifier1);
-        //Log.d(TAG, "ISBN 1: " + isbn);
-        //Log.d(TAG, "ISBN 1: " + isbn1);
+        Log.d(TAG, "ISBN 1: " + isbn);
+        Log.d(TAG, "ISBN 1: " + isbn1);
 
         String categories;
         int indexCategories = str.indexOf("categories=");
@@ -257,11 +229,12 @@ public class AdvancedSearchListFragment extends Fragment {
             indexSquare1 = str.indexOf("[", indexCategories) + 1;
             indexSquare2 = str.indexOf("]", indexCategories);
             categories = str.substring(indexSquare1, indexSquare2);
-            //Log.d(TAG, "categorie: " + categories);
+            //
         }
         else{
             categories = null;
         }
+        Log.d(TAG, "categorie: " + categories);
 
         String thumbnail;
         int indexThumbnail = str.indexOf("thumbnail=");
@@ -269,11 +242,12 @@ public class AdvancedSearchListFragment extends Fragment {
             indexThumbnail = indexThumbnail + 10;
             indexCurly1 = str.indexOf("}", indexThumbnail);
             thumbnail = str.substring(indexThumbnail, indexCurly1);
-            //Log.d(TAG, "miniatura: " + thumbnail);
+            //
         }
         else{
             thumbnail = null;
         }
+        Log.d(TAG, "miniatura: " + thumbnail);
 
         List<ISBN> isbnList = new ArrayList<>();
         //Log.d(TAG, "lista isbn: " + isbnList);

@@ -14,12 +14,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textSize="18sp"
+        android:layout_margin="8dp"
+        android:textColor="@android:color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFavoriteFragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingBottom="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewFavoriteFragment" />
 

@@ -66,24 +66,58 @@ public class SearchDetailFragment extends Fragment {
         imageViewThumbnail = view.findViewById(R.id.imageViewSearchDetail);
 
         BookInfo book = SearchDetailFragmentArgs.fromBundle(getArguments()).getBook();
+        Log.d(TAG, "book" + book);
 
-        textViewTitle.setText(book.getTitle());
-        textViewAuthor.setText(book.getAuthor());
-        textViewPublisher.setText(book.getPublisher());
-        textViewPublisherDate.setText(book.getPublishedDate());
-        textViewCategories.setText(book.getCategories());
+        Log.d(TAG, "titolo: " + book.getTitle());
+        if(book.getTitle() != null) {
+            textViewTitle.setText(book.getTitle());
+        }
+
+        Log.d(TAG, "autore: " + book.getAuthor());
+        if(book.getAuthor() != null) {
+            textViewAuthor.setText(book.getAuthor());
+        }
+
+        Log.d(TAG, "publisher: " + book.getPublisher());
+        if(book.getPublisher() != null) {
+            textViewPublisher.setText(book.getPublisher());
+        }
+
+        Log.d(TAG, "data: " + book.getPublishedDate());
+        if(book.getPublishedDate() != null) {
+            textViewPublisherDate.setText(book.getPublishedDate());
+        }
+
+        Log.d(TAG, "cat: " + book.getCategories());
+        if(book.getCategories() != null) {
+            textViewCategories.setText(book.getCategories());
+        }
+
         String isbn = "";
+        Log.d(TAG, "ID: " + book.getIndustryIdentifiers());
         for (int i = 0; i < book.getIndustryIdentifiers().size(); i++) {
-            if (i == book.getIndustryIdentifiers().size() - 1)
+            if (i == book.getIndustryIdentifiers().size() - 1) {
+                if(book.getIndustryIdentifiers().get(i).getType() != null)
                 isbn = isbn + book.getIndustryIdentifiers().get(i).getType().replace("_", " ") + "= " +
                         book.getIndustryIdentifiers().get(i).getIdentifier();
-            else
-                isbn = isbn + book.getIndustryIdentifiers().get(i).getType().replace("_", " ") + "= " +
+            }
+            else {
+                if(book.getIndustryIdentifiers().get(i).getType() != null)
+                    isbn = isbn + book.getIndustryIdentifiers().get(i).getType().replace("_", " ") + "= " +
                         book.getIndustryIdentifiers().get(i).getIdentifier() + "\n";
+            }
         }
         textViewISBN.setText(isbn);
-        String url = book.getThumbnail().replace("http", "https");
-        Picasso.get().load(url).into(imageViewThumbnail);
+
+        String url;
+        if(book.getThumbnail() != null) {
+            url = book.getThumbnail().replace("http", "https");
+            Picasso.get().load(url).into(imageViewThumbnail);
+        }
+        else{
+            url = "https://cdn1.iconfinder.com/data/icons/error-warning-triangles/24/more-alt-triangle-128.png";
+            Picasso.get().load(url).into(imageViewThumbnail);
+        }
 
         buttonAddPreferences = view.findViewById(R.id.buttonAddPreferences);
         //SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("MY_USER_PREF", Context.MODE_PRIVATE);
@@ -91,10 +125,6 @@ public class SearchDetailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 addFavorite(book);
-
-                Toast toast = Toast.makeText(getActivity(), book.getTitle() + " aggiunto dai preferiti", Toast.LENGTH_SHORT);
-                toast.setGravity(Gravity.CENTER, 0, 0);
-                toast.show();
             }
         });
     }
@@ -129,10 +159,14 @@ public class SearchDetailFragment extends Fragment {
 
             if (trovato) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Errore!");
-                builder.setMessage("'" + bookInfo.getTitle() + "' è già presente nei preferiti!");
+                builder.setTitle(R.string.ErrorTitle);
+                builder.setMessage("'" + bookInfo.getTitle() + "' " + getResources().getString(R.string.ErrorFavorites));
                 builder.show();
             } else {
+                Toast toast = Toast.makeText(getActivity(),  bookInfo.getTitle() + " "
+                        + getResources().getString(R.string.AddedToFavorites), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.CENTER, 0, 0);
+                toast.show();
                 bookInfoList.add(bookInfo);
                 gStringInput = gson.toJson(bookInfoList);
 

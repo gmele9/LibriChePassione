@@ -45,9 +45,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         public void bind(BookInfo book, OnItemClickListener onItemClickListener){
             textViewBookTitle.setText(book.getTitle());
             textViewBookAuthors.setText(book.getAuthor());
-            Log.d(TAG, "url:" + book.getThumbnail());
-            String URL = book.getThumbnail().replace("http", "https");
-            Picasso.get().load(URL).into(imageViewBook);
+
+            String URL;
+
+            if(book.getThumbnail() != null) {
+                Log.d(TAG, "url:" + book.getThumbnail());
+                URL = book.getThumbnail().replace("http", "https");
+                Picasso.get().load(URL).into(imageViewBook);
+            }
+            else {
+                URL = "https://cdn1.iconfinder.com/data/icons/error-warning-triangles/24/more-alt-triangle-128.png";
+                Picasso.get().load(URL).into(imageViewBook);
+            }
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

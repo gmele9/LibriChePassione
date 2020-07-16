@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">LibriChePassione</string>
+    <string name="searchWithISBN">Search with ISBN code</string>
+    <string name="editTextISBN">ISBN</string>
+    <string name="buttonSearch">SEARCH</string>
+    <string name="editTextTitle">Title</string>
+    <string name="editTextAuthor">Author</string>
+    <string name="searchAuthorTitleSubject">Search by author</string>
+    <string name="textViewSubject">Category:</string>
+    <string name="titleDetail">Title:</string>
+    <string name="authorDetail">Author:</string>
+    <string name="PublisherDetail">Publisher:</string>
+    <string name="PublisherDateDetail">Published Date:</string>
+    <string name="ISBNDetail">Identifiers:</string>
+    <string name="CategoriesDetail">Category:</string>
+    <string name="addFavorites">Add to favorites</string>
+    <string name="Results">Results:</string>
+    <string name="NoResults">No results found</string>
+    <string name="RemoveFavorite">Remove from favorites</string>
+    <string name="BottomNavSearch">Search</string>
+    <string name="BottomNavSearchAdv">Advanced Search</string>
+    <string name="BottomNavFav">Favorites</string>
+    <string name="ErrorTitle">Error!</string>
+    <string name="ErrorISBN">"Enter valid isbn  "</string>
+    <string name="ErrorAuthor">"Enter the name of an author "</string>
+    <string name="FavoriteNoElem">No items added to favorites</string>
+    <string name="FavoriteElem">Your favorite books:</string>
+    <string name="ErrorFavorites">is already saved in favorites</string>
+    <string name="RemovedByFavorites">removed from favorites</string>
+    <string name="AddedToFavorites">added to favorites</string>
+</resources>

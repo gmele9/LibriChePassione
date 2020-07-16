@@ -28,7 +28,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/titleDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailTitle"
@@ -50,7 +50,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/authorDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailAuthor"
@@ -71,7 +71,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/PublisherDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailPublisher"
@@ -92,7 +92,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/PublisherDateDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailPublisherDate"
@@ -113,7 +113,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/ISBNDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailISBN"
@@ -134,7 +134,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginRight="8dp"
             android:text="@string/CategoriesDetail"
-            android:textSize="12sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textViewSearchDetailCategories"
@@ -156,7 +156,7 @@
                 android:id="@+id/buttonAddPreferences"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Aggiungi ai preferiti"
+                android:text="@string/addFavorites"
                 />
         </LinearLayout>
     </LinearLayout>

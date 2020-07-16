@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,9 +67,11 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         if(bookInfoList == null || bookInfoList.isEmpty()){
-            textView.setText("Nessun elemento aggiunto ai preferiti");
+            textView.setText(R.string.FavoriteNoElem);
+            textView.setGravity(Gravity.CENTER);
         }
         else{
+            textView.setText(R.string.FavoriteElem);
             SearchAdapter searchAdapter = new SearchAdapter(bookInfoList, getActivity(), new SearchAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(BookInfo book) {
@@ -79,9 +82,7 @@ public class FavoriteFragment extends Fragment {
             });
             recyclerView.setAdapter(searchAdapter);
         }
-
         //Log.d(TAG, "booklist title: " + bookInfoList.get(0).getTitle());
-
     }
 
 }

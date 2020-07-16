@@ -21,13 +21,10 @@ public class SearchRepository  {
     private SearchService searchService;
     private static final String TAG = "SearchRepository: ";
 
-
     private SearchRepository(){
         Retrofit retrofit = new Retrofit.Builder().baseUrl(Constants.SEARCH_API_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-
 
         searchService = retrofit.create(SearchService.class);
     }

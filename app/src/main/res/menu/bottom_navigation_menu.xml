@@ -4,20 +4,20 @@
         android:id="@+id/searchFragment"
         android:enabled="true"
         android:icon="@drawable/ic_search_black_24dp"
-        android:title="Cerca"
+        android:title="@string/BottomNavSearch"
         android:visible="true" />
 
     <item
         android:id="@+id/advancedSearchFragment"
         android:enabled="true"
         android:icon="@drawable/ic_location_searching_black_24dp"
-        android:title="Ricerca Avanzata"
+        android:title="@string/BottomNavSearchAdv"
         android:visible="true" />
 
     <item
         android:id="@+id/favoriteFragment"
         android:enabled="true"
         android:icon="@drawable/ic_star_black_24dp"
-        android:title="Preferiti"
+        android:title="@string/BottomNavFav"
         android:visible="true" />
 </menu>
